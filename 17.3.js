@@ -11,11 +11,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/getNote', function(req, res) {
-    fs.readFile('./test.json', 'utf8', function(err, data) {
+    fs.readFile('./test.json', 'utf8', function(err, data) { //console.log(data);
       if (err) throw err;
       stringifyFile = data;
     res.send(data);
   });
+    
 });
 
 app.post('/updateNote/:note', function(req, res) {
@@ -27,13 +28,14 @@ app.post('/updateNote/:note', function(req, res) {
     }
 
     dataArray = Array.isArray(dataArray) ? dataArray : [];
+
     dataArray.push(req.params.note);
     stringifyFile = JSON.stringify(dataArray);
 
-  fs.writeFile('./test.json', stringifyFile, function(err) {
-    if (err) throw err;
-    console.log('file updated');
-    res.send('hello');
+    fs.writeFile('./test.json', stringifyFile, function(err) {
+      if (err) throw err;
+      console.log('file updated');
+      res.send('hello');
     });
   });
 });
